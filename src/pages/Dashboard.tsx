@@ -1,29 +1,22 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { PlaneTakeoff } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
-export const Route = createFileRoute("/app")({
-  head: () => ({
-    meta: [
-      { title: "Dashboard — Flight Price Notifier" },
-      { name: "description", content: "你的航線追蹤儀表板 — Flight Price Notifier app shell." },
-      { property: "og:title", content: "Dashboard — Flight Price Notifier" },
-      { property: "og:description", content: "你的航線追蹤儀表板 — Flight Price Notifier app shell." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: AppShell,
-});
+export default function Dashboard() {
+  usePageMeta(
+    "Dashboard — Flight Price Notifier",
+    "你的航線追蹤儀表板 — Flight Price Notifier app shell.",
+  );
 
-function AppShell() {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/signin" });
+    if (!loading && !user) navigate("/signin");
   }, [loading, user, navigate]);
 
   if (loading || !user) {
@@ -49,7 +42,7 @@ function AppShell() {
             size="sm"
             onClick={async () => {
               await signOut();
-              navigate({ to: "/" });
+              navigate("/");
             }}
           >
             Sign out / 登出

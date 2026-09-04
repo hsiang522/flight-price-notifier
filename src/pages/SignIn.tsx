@@ -1,27 +1,20 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
+
 import { AuthShell } from "@/components/AuthShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/useAuth";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/signin")({
-  head: () => ({
-    meta: [
-      { title: "Sign in — Flight Price Notifier" },
-      { name: "description", content: "登入 Flight Price Notifier，管理你的機票降價通知。" },
-      { property: "og:title", content: "Sign in — Flight Price Notifier" },
-      { property: "og:description", content: "登入 Flight Price Notifier，管理你的機票降價通知。" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: SignIn,
-});
+export default function SignIn() {
+  usePageMeta(
+    "Sign in — Flight Price Notifier",
+    "登入 Flight Price Notifier，管理你的機票降價通知。",
+  );
 
-function SignIn() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [email, setEmail] = useState("");
@@ -30,7 +23,7 @@ function SignIn() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (user) navigate({ to: "/app" });
+    if (user) navigate("/app");
   }, [user, navigate]);
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -43,7 +36,7 @@ function SignIn() {
       setError(signInError.message);
       return;
     }
-    navigate({ to: "/app" });
+    navigate("/app");
   };
 
   return (

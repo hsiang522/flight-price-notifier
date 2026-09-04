@@ -22,3 +22,14 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Deployment
+
+This is a plain Vite + React single-page app — no SSR, no server runtime.
+
+```sh
+npm run build   # -> static dist/
+```
+
+Deploy `dist/` to any static host. On Vercel, `vercel.json` rewrites every path to
+`/index.html` so client-side deep links such as `/app` resolve correctly.
