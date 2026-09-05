@@ -23,6 +23,23 @@ npm i
 npm run dev
 ```
 
+## Environment
+
+The app talks to a Supabase project through two build-time variables:
+
+| Variable | Value |
+| --- | --- |
+| `VITE_SUPABASE_URL` | your Supabase project URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | your project's publishable key (`sb_publishable_…`) |
+
+The publishable key is the current name for what Supabase used to call the anon key:
+browser-safe and gated by row-level security. Both are read in
+`src/integrations/supabase/client.ts` via `import.meta.env`; nothing is hardcoded.
+
+Vite inlines `VITE_*` variables at build time, so they must be present wherever the
+build runs — locally in `.env`, and on Vercel under Project Settings → Environment
+Variables.
+
 ## Deployment
 
 This is a plain Vite + React single-page app — no SSR, no server runtime.
